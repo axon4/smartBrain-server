@@ -22,7 +22,7 @@ const database = knex({
     }
 });
 
-server.get('/', (req, res) => res.send(database.users));
+server.get('/', (req, res) => res.send('Sb'));
 server.post('/login', login.handleLogIn(database, bcrypt));
 server.post('/register', register.handleRegister(database, bcrypt));
 server.get('/profile/:id', profile.handleProfileGet(database));
