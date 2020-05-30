@@ -16,7 +16,7 @@ const database = knex({
     client: 'pg',
     connection: {
         connectionString: process.env.DATABASE_URL,
-        ssl: true
+        ssl: true,
     }
 });
 
@@ -24,7 +24,7 @@ server.get('/', (req, res) => res.send('Sb'));
 server.post('/login', login.handleLogIn(database, bcrypt));
 server.post('/register', register.handleRegister(database, bcrypt));
 server.get('/profile/:id', profile.handleProfileGet(database));
+server.post('/apicall', (req, res) => image.handleAPICall(req, res));
 server.put('/image', image.handleImage(database));
-server.post('/imageurl', (req, res) => image.handleAPICall(req, res));
 
-server.listen(process.env.PORT || 3001, () => console.log(`Listening to port ${process.env.PORT}`));
+server.listen(process.env.PORT || 3001, () => console.log(`Listening to port ${process.env.PORT}`)); 
