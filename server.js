@@ -15,18 +15,16 @@ server.use(cors());
 const database = knex({
     client: 'pg',
     connection: {
-        host: '127.0.0.1',
-        user: 'postgres',
-        password: '',
-        database: 'smartbrain'
+        connectionString: process.env.DATABASE_URL,
+        ssl: {rejectUnauthorized: false},
     }
 });
 
-server.get('/', (req, res) => res.send(database.users));
+server.get('/', (req, res) => res.send('Sb'));
 server.post('/login', login.handleLogIn(database, bcrypt));
 server.post('/register', register.handleRegister(database, bcrypt));
 server.get('/profile/:id', profile.handleProfileGet(database));
+server.post('/apicall', (req, res) => image.handleAPICall(req, res));
 server.put('/image', image.handleImage(database));
-server.post('/imageurl', (req, res) => image.handleAPICall(req, res));
 
 server.listen(process.env.PORT || 3001, () => console.log(`Listening to port ${process.env.PORT}`));
