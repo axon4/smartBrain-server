@@ -16,7 +16,11 @@ const database = knex({
     client: 'pg',
     connection: {
         connectionString: process.env.DATABASE_URL,
-        ssl: {rejectUnauthorized: false}
+        ssl: {rejectUnauthorized: false},
+        host: '127.0.0.1',
+        user: 'postgres',
+        password: 'qazplm11!!',
+        database: 'smartbrain'
     }
 });
 
@@ -27,4 +31,5 @@ server.get('/profile/:id', profile.handleProfileGet(database));
 server.post('/apicall', (req, res) => image.handleAPICall(req, res));
 server.put('/image', image.handleImage(database));
 
-server.listen(process.env.PORT || 3001, () => console.log(`Listening to port ${process.env.PORT}`));
+server.listen(3001, () => console.log(`Listening to port ${process.env.PORT}`));
+//process.env.PORT || 
