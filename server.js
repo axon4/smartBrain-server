@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const morgan = require('morgan');
 const knex = require('knex');
 const bcrypt = require('bcrypt-nodejs');
 
@@ -9,15 +10,20 @@ const profile = require('./controllers/profile');
 const image = require('./controllers/image');
 
 const server = express();
+
 server.use(express.json());
 server.use(cors());
+server.use(morgan('combined'));
 
 const database = knex({
     client: 'pg',
-    connection: {
-        connectionString: process.env.DATABASE_URL,
-        ssl: {rejectUnauthorized: false},
-    }
+    // Docker
+    connection: process.env.POSTGRES_URI
+    // Heroku
+    // {
+    //     connectionString: process.env.DATABASE_URL,
+    //     ssl: {rejectUnauthorized: false}
+    // },
 });
 
 server.get('/', (req, res) => res.send('Sb'));
@@ -27,4 +33,4 @@ server.get('/profile/:id', profile.handleProfileGet(database));
 server.post('/apicall', (req, res) => image.handleAPICall(req, res));
 server.put('/image', image.handleImage(database));
 
-server.listen(process.env.PORT || 3001, () => console.log(`Listening to port ${process.env.PORT}`));
+server.listen(3000, () => console.log(`Listening to port 3000 ${process.env.PORT}`));

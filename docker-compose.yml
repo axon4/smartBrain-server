@@ -1,0 +1,30 @@
+version: '3.6'
+
+services:
+
+    # Backend
+    smartbrain-api:
+        container_name: backend
+        working_dir: /usr/src/smartbrain-api
+        volumes:
+            - ./:/usr/src/smartbrain-api
+            - /usr/src/smartbrain-api/node_modules
+        # environment:
+            # POSTGRES_URI: postgres://postgres:qazplm11!!@localhost:5433/smartbrain-docker
+        # links:
+            # - postgres
+        build: ./
+        ports:
+            - '3000:3000'
+        command: npm run start-dev
+
+    # PostgreSQL
+    # postgres:
+    #     build: ./postgres
+    #     environment:
+    #         POSTGRES_HOST: postgres
+    #         POSTGRES_DATABASE: smartbrain-docker
+    #         POSTGRES_USER: postgres
+    #         POSTGRES_PASSWORD:
+    #     ports:
+    #         - '5432:5432'
