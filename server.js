@@ -18,12 +18,12 @@ server.use(morgan('combined'));
 const database = knex({
     client: 'pg',
     // Docker
-    connection: process.env.POSTGRES_URI
+    // connection: process.env.POSTGRES_URI
     // Heroku
-    // {
-    //     connectionString: process.env.DATABASE_URL,
-    //     ssl: {rejectUnauthorized: false}
-    // },
+    connection: {
+        connectionString: process.env.DATABASE_URL,
+        ssl: {rejectUnauthorized: false}
+    }
 });
 
 server.get('/', (req, res) => res.send('Sb'));
@@ -33,4 +33,4 @@ server.get('/profile/:id', profile.handleProfileGet(database));
 server.post('/apicall', (req, res) => image.handleAPICall(req, res));
 server.put('/image', image.handleImage(database));
 
-server.listen(3000, () => console.log(`Listening to port 3000 ${process.env.PORT}`));
+server.listen(process.env.PORT || 3000, () => console.log(`Listening to port: ${process.env.PORT}`));
