@@ -33,4 +33,4 @@ server.get('/profile/:id', profile.handleProfileGet(database));
 server.post('/apicall', (req, res) => image.handleAPICall(req, res));
 server.put('/image', image.handleImage(database));
 
-server.listen(process.env.PORT || 3000, () => console.log(`Listening to port: ${process.env.PORT}`));
+server.listen(process.env.PORT || 3001, () => console.log(`Listening to port: ${process.env.PORT}`));
