@@ -1,8 +1,9 @@
-# SmartBrain API
+# SmartBrain (Server)
 
-* Back-End for SmartBrain, an automatic face-detection application.
-* Dockerised, for easy deployment to the Cloud.
-* Front-End: <a href='https://github.com/axon4/smartbrain' target='_blank'>SmartBrain</a>.
+* back-end for SmartBrain, an automatic--face-detection---application
+* handles API-reQuests for authentication and storage
+* Dockerised-branch for easy deployment to Cloud
+* client: ![SmartBrain (Client)](https://github.com/axon4/smartBrain-client)
 
 ## Stack
 

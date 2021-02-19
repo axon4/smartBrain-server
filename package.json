@@ -1,10 +1,10 @@
 {
-	"name": "smartbrain-API",
+	"name": "smartBrain-server",
 	"version": "0.0.1",
 	"main": "server.js",
 	"scripts": {
 		"start": "node server.js",
-		"start-dev": "nodemon server.js"
+		"start-dev": "nodemon server.js --legacy-watch"
 	},
 	"dependencies": {
 		"bcrypt-nodejs": "0.0.3",

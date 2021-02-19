@@ -1,21 +1,22 @@
 const Clarifai = require('clarifai');
 
-const API = new Clarifai.App({apiKey: process.env.API_CLARIFAI});
+const APIKey = process.env.NODE_ENV === 'production' ? process.env.API_CLARIFAI : 'null';
+const API = new Clarifai.App({apiKey: APIKey});
 
-const handleAPICall = (req, res) => {
-	API.models.predict(Clarifai.FACE_DETECT_MODEL, req.body.input)
-		.then(data => res.json(data))
-		.catch(() => res.status(500).json('API SERVICE CURRENTLY UNAVAILABLE'));
+const handleAPICall = (request, response) => {
+	API.models.predict(Clarifai.FACE_DETECT_MODEL, request.body.inPut)
+		.then(data => response.json(data))
+		.catch(() => response.status(500).json('API SERVICE CURRENTLY UNAVAILABLE'));
 };
 
-const handleImage = dataBase => (req, res) => {
-	const { ID } = req.body;
+const handleImage = dataBase => (request, response) => {
+	const { ID } = request.body;
 
 	dataBase('users').where('ID', '=', ID)
 		.increment('entries', 1)
 		.returning('entries')
-		.then(entries => res.json(entries[0]))
-		.catch(() => res.status(500).json('UNABLE TO GET ENTRIES'));
+		.then(entries => response.json(entries[0]))
+		.catch(() => response.status(500).json('UNABLE TO GET ENTRIES'));
 };
 
 module.exports = { handleImage, handleAPICall };
