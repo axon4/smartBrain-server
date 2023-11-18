@@ -21,9 +21,16 @@ const dataBase = knex({
 	client: 'pg',
 	// // Docker
 	// connection: process.env.POSTGRES_URI
-	// Heroku
+	// // Heroku
+	// connection: {
+	// 	connectionString: process.env.DATABASE_URL,
+	// 	ssl: {
+	// 		rejectUnauthorized: false
+	// 	}
+	// }
+	// Vercel
 	connection: {
-		connectionString: process.env.DATABASE_URL,
+		connectionString: process.env.POSTGRESQL_URL,
 		ssl: {
 			rejectUnauthorized: false
 		}
