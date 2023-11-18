@@ -1,11 +1,31 @@
-const Clarifai = require('clarifai');
+// const Clarifai = require('clarifai');
+const { ClarifaiStub, grpc } = require('clarifai-nodejs-grpc');
 
-const API = new Clarifai.App({apiKey: process.env.CLARIFAI_API_KEY});
+const stub = ClarifaiStub.grpc();
+const metaData = new grpc.Metadata();
+
+metaData.set('authorization', `Key ${process.env.CLARIFAI_API_KEY}`);
+
+// const API = new Clarifai.App({apiKey: process.env.API_CLARIFAI});
 
 const handleAPICall = (request, response) => {
-	API.models.predict(Clarifai.FACE_DETECT_MODEL, request.body.inPut)
-		.then(data => response.json(data))
-		.catch(() => response.status(500).json('API SERVICE CURRENTLY UNAVAILABLE'));
+	// API.models.predict(Clarifai.FACE_DETECT_MODEL, request.body.inPut)
+	// 	.then(data => response.json(data))
+	// 	.catch(() => response.status(500).json('API-SERVICE CURRENTLY UNAVAILABLE'));
+
+	stub.PostModelOutputs({
+			model_id: 'face-detection',
+			inputs: [{
+				data: {
+					image: {
+						url: request.body.inPut
+					}
+				}
+			}]
+	}, metaData, (error, data) => {
+		if (error) response.status(500).json('API-SERVICE CURRENTLY UNAVAILABLE');
+		else response.json(data);
+	});
 };
 
 const handleImage = dataBase => (request, response) => {
