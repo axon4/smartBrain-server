@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const CORS = require('cors');
 const morgan = require('morgan');
